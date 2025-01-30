@@ -33,15 +33,15 @@ export default function FormBuilder() {
   }
 
   return (
-    <div className="grid grid-cols-12 gap-4  px-20">
-      <section className="col-span-6 p-4  flex flex-col gap-4  bg-white   rounded-md">
+    <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
+      <section className="col-span-1 md:col-span-6 p-4 flex flex-col gap-4 bg-white rounded-md">
         <h2 className="text-lg font-medium text-mint-500">Choose the fields</h2>
 
-        <div className="flex  bg-mint-500/10 p-4 rounded-2xl gap-2 flex-wrap">
+        <div className="flex flex-wrap bg-mint-500/10 p-3 sm:p-4 rounded-2xl gap-2">
           {formFieldButtons.map(field => (
             <button
               key={field.id}
-              className="btn btn-primary cursor-pointer"
+              className="btn btn-primary cursor-pointer text-sm sm:text-base"
               onClick={() => handleAddField(field.type as TFieldType)}
             >
               {field.label}
@@ -59,10 +59,10 @@ export default function FormBuilder() {
           )}
         </div>
       </section>
-      <section className="col-span-6 bg-white p-4 rounded-md ">
+      <section className="col-span-1 md:col-span-6 bg-white p-3 sm:p-4 rounded-md">
         <h2 className="text-lg font-medium text-mint-500 mb-4">Your Form</h2>
 
-        <div className=" border p-4 rounded-2xl border-mint-500">
+        <div className="border p-3 sm:p-4 rounded-2xl border-mint-500">
           <FormRenderer fields={fields} handleSelectField={handleSelectField} />
         </div>
       </section>
