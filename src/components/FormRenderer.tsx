@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FieldError, useForm } from 'react-hook-form'
 import { z } from 'zod'
-import { TFormField } from '../utils/formUtils'
+import { TFormField } from '../types/field.type'
 import FormError from './FormError'
 
 type TFormBuilderProps = {
@@ -25,8 +25,13 @@ export default function FormRenderer({
               })
             : z.boolean()
           : field.required
-          ? z.string().min(1, { message: `${field.label} is required` })
-          : z.string().optional()
+          ? z
+              .string()
+              .nullable()
+              .refine(value => value !== null && value !== '', {
+                message: `${field.label} is required`,
+              })
+          : z.string().nullable().optional()
 
       return { ...acc, [field.id]: fieldSchema }
     }, {})
@@ -53,13 +58,13 @@ export default function FormRenderer({
 
   function onSubmit(data: any) {
     console.log('Formdata:', data)
+
+    alert('Form submitted Successfully!')
   }
 
-  console.log('fields', fields)
-  console.log('errors', errors)
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
+    <div className="min-h-[calc(100vh-200px)]">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-1">
         {fields?.map(field => (
           <div
             onClick={() => handleSelectField(field)}
@@ -70,8 +75,15 @@ export default function FormRenderer({
               <div className="flex flex-col gap-2">
                 <label
                   htmlFor={field.label}
-                  className="text-sm font-medium text-gray-700"
+                  className="text-sm flex items-center gap-2 font-medium text-gray-700"
                 >
+                  <span
+                    className={` ${
+                      field.required ? 'text-red-500 block' : 'hidden'
+                    }`}
+                  >
+                    *{' '}
+                  </span>
                   {field.label}
                 </label>
                 <input
@@ -92,8 +104,15 @@ export default function FormRenderer({
               <div className="flex flex-col gap-2">
                 <label
                   htmlFor={field.label}
-                  className="text-sm font-medium text-gray-700"
+                  className="text-sm flex items-center gap-2 font-medium text-gray-700"
                 >
+                  <span
+                    className={` ${
+                      field.required ? 'text-red-500 block' : 'hidden'
+                    }`}
+                  >
+                    *{' '}
+                  </span>
                   {field.label}
                 </label>
                 <textarea
@@ -113,17 +132,22 @@ export default function FormRenderer({
               <div className="flex flex-col gap-2">
                 <label
                   htmlFor={field.label}
-                  className="text-sm font-medium text-gray-700"
+                  className="text-sm flex items-center gap-2 font-medium text-gray-700"
                 >
+                  <span
+                    className={` ${
+                      field.required ? 'text-red-500 block' : 'hidden'
+                    }`}
+                  >
+                    *{' '}
+                  </span>
                   {field.label}
                 </label>
                 <select
                   {...register(field.id as keyof TDynamicSchema)}
                   className="px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-mint-500 focus:border-mint-500 outline-none bg-white"
                 >
-                  <option value="" disabled selected>
-                    {field.placeholder}
-                  </option>
+                  <option value="">{field.placeholder}</option>
                   {field.options?.map(option => (
                     <option key={option} value={option}>
                       {option}
@@ -138,6 +162,42 @@ export default function FormRenderer({
                 </FormError>
               </div>
             )}
+            {field.type === 'radio' && (
+              <div className="flex flex-col gap-2">
+                <label
+                  htmlFor={field.label}
+                  className="text-sm flex items-center gap-2 font-medium text-gray-700"
+                >
+                  <span
+                    className={` ${
+                      field.required ? 'text-red-500 block' : 'hidden'
+                    }`}
+                  >
+                    *{' '}
+                  </span>
+                  {field.label}
+                </label>
+                {field.options?.map(option => (
+                  <div key={option} className="flex items-center gap-2">
+                    <input
+                      type="radio"
+                      value={option}
+                      {...register(field.id as keyof TDynamicSchema)}
+                      className="w-4 h-4 text-mint-500 border-gray-300 rounded focus:ring-mint-500"
+                    />
+                    <label className="text-sm font-medium text-gray-700">
+                      {option}
+                    </label>
+                  </div>
+                ))}
+                <FormError>
+                  {
+                    (errors[field.id as keyof TDynamicSchema] as FieldError)
+                      ?.message
+                  }
+                </FormError>
+              </div>
+            )}
             {field.type === 'checkbox' && (
               <div className="flex items-center gap-3">
                 <input
@@ -147,8 +207,15 @@ export default function FormRenderer({
                 />
                 <label
                   htmlFor={field.label}
-                  className="text-sm font-medium text-gray-700"
+                  className="text-sm flex items-center gap-2 font-medium text-gray-700"
                 >
+                  <span
+                    className={` ${
+                      field.required ? 'text-red-500 block' : 'hidden'
+                    }`}
+                  >
+                    *{' '}
+                  </span>
                   {field.label}
                 </label>
                 <FormError>

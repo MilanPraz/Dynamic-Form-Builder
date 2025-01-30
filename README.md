@@ -1,50 +1,89 @@
-# React + TypeScript + Vite
+# Dynamic Form Builder
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React-based dynamic form builder that enables users to create custom forms through an intuitive button-based interface. This project allows users to build forms with various field types, edit their properties in real-time, and persist form structures locally.
 
-Currently, two official plugins are available:
+## ✨ Key Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Button-Based Field Addition**
+  - Text Input fields
+  - Dropdown menus
+  - Checkboxes
+  - Button elements
+  - Textarea
+  - Radio
+- **Field Property Customization**
+  - Edit field labels
+  - Set placeholder text
+  - Toggle required status
+  - Configure dropdown options
+- **Real-Time Form Preview**
+  - Side-by-side preview panel
+  - Instant updates as you build
+- **Form Validation**
+  - Client-side validation using React Hook Form
+  - Schema validation with Zod
+  - Required field handling
+  - Custom validation rules
+- **Local Storage Integration**
+  - Automatic saving of form structure
+  - Form state persistence across page refreshes
+  - No data loss during browser sessions
 
-## Expanding the ESLint configuration
+## 🛠️ Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **React** - UI component library
+- **TypeScript** - Static typing and enhanced IDE support
+- **Vite** - Fast build tooling and development server
+- **React Hook Form** - Form state and validation management
+- **Zod** - Schema declaration and validation
+- **Local Storage API** - Client-side data persistence
+- **Tailwind CSS** - Utility-first styling
 
-- Configure the top-level `parserOptions` property like this:
+## 🚀 Getting Started
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+1. Clone the repository
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## 💡 Usage
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+1. **Adding Form Fields**
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+   - Click the "+ Add Text Input" button to add a text field
+   - Use "+ Add Dropdown" for dropdown menus
+   - Add checkboxes with "+ Add Checkbox"
+   - Insert buttons using "+ Add Button"
+   - Add textarea with "+ Add Textarea"
+   - Add radio with "+ Add Radio"
+
+2. **Editing Field Properties**
+
+   - Click on any field to open its properties panel
+   - Modify labels, placeholders, and required status
+   - Configure dropdown options for select fields
+
+3. **Form Preview**
+   - View your form in real-time in the right preview panel
+   - Test field interactions and validation
+
+## 🎯 Implementation Challenges & Solutions
+
+### 1. State Management
+
+**Challenge:** Managing complex form state with multiple field types and properties.
+**Solution:** Implemented a structured state management system using React's useState and custom hooks, with TypeScript interfaces ensuring type safety.
+
+### 2. Real-Time Preview
+
+**Challenge:** Maintaining synchronization between the builder and preview panels.
+**Solution:** Created a shared state context that updates the preview component whenever form structure changes.
+
+### 3. Local Storage Integration
+
+**Challenge:** Efficiently storing and retrieving complex form structures.
+**Solution:** Implemented JSON serialization/deserialization with proper type checking and error handling for robust storage management.
+
+### 4. Form Validation
+
+**Challenge:** Creating dynamic validation rules for different field types.
+**Solution:** Leveraged Zod's schema building capabilities to generate validation rules based on field properties.
+
+Built with 💻 by Milan Praz
