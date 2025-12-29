@@ -8,9 +8,7 @@ function App() {
         {/* Header */}
         <header className="flex items-center justify-center">
           <h1 className="text-3xl md:text-4xl font-semibold flex items-center gap-3 text-neutral-100">
-            <span className="text-3xl">✨</span>
             <span>Dynamic Form Builder</span>
-            <span className="text-3xl">✨</span>
           </h1>
         </header>
 
